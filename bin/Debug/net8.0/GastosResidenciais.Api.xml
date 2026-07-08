@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GastosResidenciais.Api</name>
+    </assembly>
+    <members>
+        <member name="T:GastosResidenciais.Api.Controllers.PessoasController">
+            <summary>Endpoints para gerenciamento do cadastro de pessoas.</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Controllers.PessoasController.#ctor(GastosResidenciais.Api.Services.Interfaces.IPessoaService)">
+            <summary>Endpoints para gerenciamento do cadastro de pessoas.</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Controllers.PessoasController.Listar">
+            <summary>Lista todas as pessoas cadastradas.</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Controllers.PessoasController.Criar(GastosResidenciais.Api.Dtos.PessoaCreateDto)">
+            <summary>Cadastra uma nova pessoa.</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Controllers.PessoasController.Deletar(System.Guid)">
+            <summary>
+            Remove uma pessoa pelo id. Todas as transações vinculadas a ela também são removidas.
+            </summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Controllers.RelatoriosController">
+            <summary>Endpoint de consulta dos totais consolidados de receitas, despesas e saldo.</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Controllers.RelatoriosController.#ctor(GastosResidenciais.Api.Services.Interfaces.IRelatorioService)">
+            <summary>Endpoint de consulta dos totais consolidados de receitas, despesas e saldo.</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Controllers.RelatoriosController.ObterTotais">
+            <summary>
+            Retorna, para cada pessoa cadastrada, o total de receitas, despesas e saldo,
+            além do total geral consolidando todas as pessoas.
+            </summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Controllers.TransacoesController">
+            <summary>Endpoints para gerenciamento do cadastro de transações financeiras.</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Controllers.TransacoesController.#ctor(GastosResidenciais.Api.Services.Interfaces.ITransacaoService)">
+            <summary>Endpoints para gerenciamento do cadastro de transações financeiras.</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Controllers.TransacoesController.Listar">
+            <summary>Lista todas as transações cadastradas.</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Controllers.TransacoesController.Criar(GastosResidenciais.Api.Dtos.TransacaoCreateDto)">
+            <summary>
+            Cadastra uma nova transação. Caso a pessoa seja menor de idade, apenas despesas são permitidas.
+            </summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Data.AppDbContext">
+            <summary>
+            Contexto do Entity Framework Core responsável pelo acesso ao banco PostgreSQL.
+            Centraliza o mapeamento das entidades (Fluent API) para manter as classes de Model limpas.
+            </summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Data.AppDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{GastosResidenciais.Api.Data.AppDbContext})">
+            <summary>
+            Contexto do Entity Framework Core responsável pelo acesso ao banco PostgreSQL.
+            Centraliza o mapeamento das entidades (Fluent API) para manter as classes de Model limpas.
+            </summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Dtos.PessoaCreateDto">
+            <summary>Dados necessários para cadastrar uma nova pessoa.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Dtos.PessoaResponseDto">
+            <summary>Representação de uma pessoa retornada pela API.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Dtos.TotaisPessoaDto">
+            <summary>Totais financeiros consolidados de uma única pessoa.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Dtos.TotaisGeraisDto">
+            <summary>Totais financeiros consolidados de todas as pessoas cadastradas, incluindo o total geral.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Dtos.TransacaoCreateDto">
+            <summary>Dados necessários para cadastrar uma nova transação.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Dtos.TransacaoResponseDto">
+            <summary>Representação de uma transação retornada pela API.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Enums.TipoTransacao">
+            <summary>
+            Representa a natureza de uma transação financeira: entrada (Receita) ou saída (Despesa) de dinheiro.
+            </summary>
+        </member>
+        <member name="F:GastosResidenciais.Api.Enums.TipoTransacao.Despesa">
+            <summary>Saída de dinheiro (gasto).</summary>
+        </member>
+        <member name="F:GastosResidenciais.Api.Enums.TipoTransacao.Receita">
+            <summary>Entrada de dinheiro (ganho).</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Exceptions.BusinessRuleException">
+            <summary>Lançada quando uma regra de negócio é violada (mapeada para HTTP 422).</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Exceptions.BusinessRuleException.#ctor(System.String)">
+            <summary>Lançada quando uma regra de negócio é violada (mapeada para HTTP 422).</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Exceptions.NotFoundException">
+            <summary>Lançada quando um recurso solicitado não é encontrado (mapeada para HTTP 404).</summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Exceptions.NotFoundException.#ctor(System.String)">
+            <summary>Lançada quando um recurso solicitado não é encontrado (mapeada para HTTP 404).</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Mappers.PessoaMapper">
+            <summary>
+            Conversões entre a entidade Pessoa e seus DTOs.
+            Implementado como extension methods simples para manter baixo acoplamento sem depender de
+            bibliotecas externas de mapeamento (AutoMapper, Mapster, etc.).
+            </summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Mappers.TransacaoMapper">
+            <summary>Conversões entre a entidade Transacao e seus DTOs.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Middlewares.ExceptionHandlingMiddleware">
+            <summary>
+            Middleware responsável por capturar exceções lançadas pelas camadas internas (Services/Repositories)
+            e traduzi-las em respostas HTTP padronizadas, evitando try/catch repetido em cada Controller.
+            </summary>
+        </member>
+        <member name="M:GastosResidenciais.Api.Middlewares.ExceptionHandlingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{GastosResidenciais.Api.Middlewares.ExceptionHandlingMiddleware})">
+            <summary>
+            Middleware responsável por capturar exceções lançadas pelas camadas internas (Services/Repositories)
+            e traduzi-las em respostas HTTP padronizadas, evitando try/catch repetido em cada Controller.
+            </summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:GastosResidenciais.Api.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:GastosResidenciais.Api.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:GastosResidenciais.Api.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:GastosResidenciais.Api.Models.Pessoa">
+            <summary>
+            Representa uma pessoa cadastrada no sistema, dona de zero ou mais transações financeiras.
+            </summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Pessoa.Id">
+            <summary>Identificador único, gerado automaticamente pelo banco de dados.</summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Pessoa.Nome">
+            <summary>Nome completo da pessoa.</summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Pessoa.Idade">
+            <summary>Idade da pessoa. Usada para aplicar a regra de negócio de menores de idade.</summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Pessoa.Transacoes">
+            <summary>
+            Transações associadas a esta pessoa.
+            Ao deletar a pessoa, todas as transações relacionadas são removidas em cascata (configurado no AppDbContext).
+            </summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Pessoa.EhMenorDeIdade">
+            <summary>Indica se a pessoa é menor de idade (regra de negócio: menor de 18 anos).</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Models.Transacao">
+            <summary>
+            Representa uma transação financeira (receita ou despesa) associada a uma pessoa.
+            </summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Transacao.Id">
+            <summary>Identificador único, gerado automaticamente pelo banco de dados.</summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Transacao.Descricao">
+            <summary>Descrição livre da transação (ex: "Supermercado", "Salário").</summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Transacao.Valor">
+            <summary>Valor monetário da transação. Sempre positivo; o sinal é definido pelo campo Tipo.</summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Transacao.Tipo">
+            <summary>Define se a transação é uma Receita ou uma Despesa.</summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Transacao.PessoaId">
+            <summary>Chave estrangeira para a pessoa dona da transação.</summary>
+        </member>
+        <member name="P:GastosResidenciais.Api.Models.Transacao.Pessoa">
+            <summary>Navegação para a pessoa dona da transação.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Repositories.Interfaces.IPessoaRepository">
+            <summary>Contrato de acesso a dados para a entidade Pessoa.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Repositories.Interfaces.ITransacaoRepository">
+            <summary>Contrato de acesso a dados para a entidade Transacao.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Repositories.PessoaRepository">
+            <inheritdoc cref="T:GastosResidenciais.Api.Repositories.Interfaces.IPessoaRepository"/>
+        </member>
+        <member name="M:GastosResidenciais.Api.Repositories.PessoaRepository.#ctor(GastosResidenciais.Api.Data.AppDbContext)">
+            <inheritdoc cref="T:GastosResidenciais.Api.Repositories.Interfaces.IPessoaRepository"/>
+        </member>
+        <member name="T:GastosResidenciais.Api.Repositories.TransacaoRepository">
+            <inheritdoc cref="T:GastosResidenciais.Api.Repositories.Interfaces.ITransacaoRepository"/>
+        </member>
+        <member name="M:GastosResidenciais.Api.Repositories.TransacaoRepository.#ctor(GastosResidenciais.Api.Data.AppDbContext)">
+            <inheritdoc cref="T:GastosResidenciais.Api.Repositories.Interfaces.ITransacaoRepository"/>
+        </member>
+        <member name="T:GastosResidenciais.Api.Services.Interfaces.IPessoaService">
+            <summary>Regras de negócio relacionadas ao cadastro de pessoas.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Services.Interfaces.IRelatorioService">
+            <summary>Consultas de totais consolidados (receitas, despesas e saldo) por pessoa e geral.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Services.Interfaces.ITransacaoService">
+            <summary>Regras de negócio relacionadas ao cadastro de transações.</summary>
+        </member>
+        <member name="T:GastosResidenciais.Api.Services.PessoaService">
+            <inheritdoc cref="T:GastosResidenciais.Api.Services.Interfaces.IPessoaService"/>
+        </member>
+        <member name="M:GastosResidenciais.Api.Services.PessoaService.#ctor(GastosResidenciais.Api.Repositories.Interfaces.IPessoaRepository)">
+            <inheritdoc cref="T:GastosResidenciais.Api.Services.Interfaces.IPessoaService"/>
+        </member>
+        <member name="T:GastosResidenciais.Api.Services.RelatorioService">
+            <inheritdoc cref="T:GastosResidenciais.Api.Services.Interfaces.IRelatorioService"/>
+        </member>
+        <member name="M:GastosResidenciais.Api.Services.RelatorioService.#ctor(GastosResidenciais.Api.Repositories.Interfaces.IPessoaRepository)">
+            <inheritdoc cref="T:GastosResidenciais.Api.Services.Interfaces.IRelatorioService"/>
+        </member>
+        <member name="T:GastosResidenciais.Api.Services.TransacaoService">
+            <inheritdoc cref="T:GastosResidenciais.Api.Services.Interfaces.ITransacaoService"/>
+        </member>
+        <member name="M:GastosResidenciais.Api.Services.TransacaoService.#ctor(GastosResidenciais.Api.Repositories.Interfaces.ITransacaoRepository,GastosResidenciais.Api.Repositories.Interfaces.IPessoaRepository)">
+            <inheritdoc cref="T:GastosResidenciais.Api.Services.Interfaces.ITransacaoService"/>
+        </member>
+    </members>
+</doc>
